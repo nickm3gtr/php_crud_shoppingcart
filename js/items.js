@@ -18,7 +18,7 @@ new Vue({
   methods: {
     getAllItems() {
       this.loading = true;
-      axios.get("/shopping_cart/api/v1.php?action=read-items").then((res) => {
+      axios.get("./api/v1.php?action=read-items").then((res) => {
         console.log(res);
         this.loading = false;
         if (res.data.error) {
@@ -36,25 +36,21 @@ new Vue({
       var formData = new FormData();
       formData.append("item_name", this.newItemName);
       formData.append("item_price", this.newItemPrice);
-      axios
-        .post("/shopping_cart/api/v1.php?action=create-item", formData)
-        .then((res) => {
-          console.log(res);
-          this.newItemName = "";
-          this.newItemPrice = "";
-          this.getAllItems();
-        });
+      axios.post("./api/v1.php?action=create-item", formData).then((res) => {
+        console.log(res);
+        this.newItemName = "";
+        this.newItemPrice = "";
+        this.getAllItems();
+      });
     },
     deleteItem(id) {
       console.log(id);
       var formData = new FormData();
       formData.append("id", id);
-      axios
-        .post("/shopping_cart/api/v1.php?action=delete-item", formData)
-        .then((res) => {
-          console.log(res.data);
-          this.getAllItems();
-        });
+      axios.post("./api/v1.php?action=delete-item", formData).then((res) => {
+        console.log(res.data);
+        this.getAllItems();
+      });
     },
     updateItem() {
       console.log(this.updateID);
@@ -62,13 +58,11 @@ new Vue({
       formData.append("id", this.updateID);
       formData.append("item_name", this.updateName);
       formData.append("item_price", this.updatePrice);
-      axios
-        .post("/shopping_cart/api/v1.php?action=update-item", formData)
-        .then((res) => {
-          console.log(res.data);
-          this.showEditModal = false;
-          this.getAllItems();
-        });
+      axios.post("./api/v1.php?action=update-item", formData).then((res) => {
+        console.log(res.data);
+        this.showEditModal = false;
+        this.getAllItems();
+      });
     },
     openUpdateModal(id, name, price) {
       this.updateID = id;

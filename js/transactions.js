@@ -15,27 +15,22 @@ new Vue({
   methods: {
     getAllTransactions() {
       this.loading = true;
-      axios
-        .get("/shopping_cart/api/v1.php?action=read-transactions")
-        .then((res) => {
-          console.log(res.data.transactions);
-          this.loading = false;
-          if (res.data.error) {
-            this.errorMessage = res.data.message;
-          } else {
-            this.transactions = res.data.transactions;
-          }
-        });
+      axios.get("./api/v1.php?action=read-transactions").then((res) => {
+        console.log(res.data.transactions);
+        this.loading = false;
+        if (res.data.error) {
+          this.errorMessage = res.data.message;
+        } else {
+          this.transactions = res.data.transactions;
+        }
+      });
     },
     viewDetails(id) {
       console.log(id);
       var formData = new FormData();
       formData.append("cart_id", id);
       axios
-        .post(
-          "/shopping_cart/api/v1.php?action=read-transaction-details",
-          formData
-        )
+        .post("./api/v1.php?action=read-transaction-details", formData)
         .then((res) => {
           this.cashierName = res.data.transaction_details[0].cashier_name;
           this.date = res.data.transaction_details[0].date_time;
