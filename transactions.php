@@ -43,7 +43,6 @@
                 <th scope="col">Price</th>
                 <th scope="col">Qty</th>
                 <th scope="col">Amount</th>
-                <th></th>
               </tr>
             </thead>
             <tbody v-for="(item, index) in transactionDetails" :key="index">
@@ -52,7 +51,6 @@
                 <td><span v-cloak>{{ item.item_price }}</span></td>
                 <td><span v-cloak>{{ item.item_qty }}</span></td>
                 <td><span v-cloak>{{ parseFloat(item.item_qty * item.item_price).toFixed(2) }}</span></td>
-                <td><button @click="viewDetails(item.id)" class="btn btn-primary btn-sm">details</button></td>
               </tr>
             </tbody>
           </table>
