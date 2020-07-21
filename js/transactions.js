@@ -16,9 +16,7 @@ new Vue({
     getAllTransactions() {
       this.loading = true;
       axios
-        .get(
-          "http://localhost:/shopping_cart/api/v1.php?action=read-transactions"
-        )
+        .get("/shopping_cart/api/v1.php?action=read-transactions")
         .then((res) => {
           console.log(res.data.transactions);
           this.loading = false;
@@ -35,7 +33,7 @@ new Vue({
       formData.append("cart_id", id);
       axios
         .post(
-          "http://localhost:/shopping_cart/api/v1.php?action=read-transaction-details",
+          "/shopping_cart/api/v1.php?action=read-transaction-details",
           formData
         )
         .then((res) => {

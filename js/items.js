@@ -18,17 +18,15 @@ new Vue({
   methods: {
     getAllItems() {
       this.loading = true;
-      axios
-        .get("http://localhost:/shopping_cart/api/v1.php?action=read-items")
-        .then((res) => {
-          console.log(res);
-          this.loading = false;
-          if (res.data.error) {
-            this.errorMessage = res.data.message;
-          } else {
-            this.items = res.data.items;
-          }
-        });
+      axios.get("/shopping_cart/api/v1.php?action=read-items").then((res) => {
+        console.log(res);
+        this.loading = false;
+        if (res.data.error) {
+          this.errorMessage = res.data.message;
+        } else {
+          this.items = res.data.items;
+        }
+      });
     },
     addItem() {
       newItem = {
@@ -39,10 +37,7 @@ new Vue({
       formData.append("item_name", this.newItemName);
       formData.append("item_price", this.newItemPrice);
       axios
-        .post(
-          "http://localhost:/shopping_cart/api/v1.php?action=create-item",
-          formData
-        )
+        .post("/shopping_cart/api/v1.php?action=create-item", formData)
         .then((res) => {
           console.log(res);
           this.newItemName = "";
@@ -55,10 +50,7 @@ new Vue({
       var formData = new FormData();
       formData.append("id", id);
       axios
-        .post(
-          "http://localhost:/shopping_cart/api/v1.php?action=delete-item",
-          formData
-        )
+        .post("/shopping_cart/api/v1.php?action=delete-item", formData)
         .then((res) => {
           console.log(res.data);
           this.getAllItems();
@@ -71,10 +63,7 @@ new Vue({
       formData.append("item_name", this.updateName);
       formData.append("item_price", this.updatePrice);
       axios
-        .post(
-          "http://localhost:/shopping_cart/api/v1.php?action=update-item",
-          formData
-        )
+        .post("/shopping_cart/api/v1.php?action=update-item", formData)
         .then((res) => {
           console.log(res.data);
           this.showEditModal = false;

@@ -29,22 +29,20 @@ new Vue({
   methods: {
     getAllItems() {
       this.loading = true;
-      axios
-        .get("http://localhost:/shopping_cart/api/v1.php?action=read-items")
-        .then((res) => {
-          console.log(res.data.items);
-          this.loading = false;
-          if (res.data.error) {
-            this.errorMessage = res.data.message;
-          } else {
-            this.items = res.data.items;
-          }
-        });
+      axios.get("/shopping_cart/api/v1.php?action=read-items").then((res) => {
+        console.log(res.data.items);
+        this.loading = false;
+        if (res.data.error) {
+          this.errorMessage = res.data.message;
+        } else {
+          this.items = res.data.items;
+        }
+      });
     },
     getAllCashiers() {
       this.loading = true;
       axios
-        .get("http://localhost:/shopping_cart/api/v1.php?action=read-cashiers")
+        .get("/shopping_cart/api/v1.php?action=read-cashiers")
         .then((res) => {
           console.log(res.data.cashiers);
           this.loading = false;
@@ -73,17 +71,12 @@ new Vue({
       formData.append("cashier_id", this.selected_cashier);
       // Post cart
       axios
-        .post(
-          "http://localhost:/shopping_cart/api/v1.php?action=add-cart",
-          formData
-        )
+        .post("/shopping_cart/api/v1.php?action=add-cart", formData)
         .then((res) => {
           console.log(res.data);
           // GET CART ID
           axios
-            .get(
-              "http://localhost:/shopping_cart/api/v1.php?action=get-latest-id"
-            )
+            .get("/shopping_cart/api/v1.php?action=get-latest-id")
             .then((res) => {
               console.log("ID latest", res.data.id[0]);
               // Post to Item_Cart
@@ -96,7 +89,7 @@ new Vue({
                 formData.append("item_qty", this.cart[i].item_qty);
                 axios
                   .post(
-                    "http://localhost:/shopping_cart/api/v1.php?action=add-item-cart",
+                    "/shopping_cart/api/v1.php?action=add-item-cart",
                     formData
                   )
                   .then((res) => {
