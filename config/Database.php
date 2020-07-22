@@ -8,7 +8,7 @@ class Database
     private $password = '';
     private $dbName = 'shopping_cart';
 
-    public function connect()
+    public function __construct()
     {
         return new mysqli($this->host,$this->username, $this->password, $this->dbName);
     }

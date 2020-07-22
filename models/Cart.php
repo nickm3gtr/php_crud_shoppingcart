@@ -7,10 +7,17 @@ class Cart extends Database
     public $cashier_id;
     public $date_time;
 
+    private $connect;
+
+    public function __construct()
+    {
+        $this->connect = parent::__construct();
+    }
+
     public function show()
     {
         $sql = "SELECT `id` FROM `cart` ORDER BY `id` DESC LIMIT 1";
-        $result = $this->connect()->query($sql);
+        $result = $this->connect->query($sql);
 
         $res = array();
 
@@ -27,7 +34,7 @@ class Cart extends Database
     {
         $sql = "INSERT INTO `cart` (`cashier_id`, `date_time`) VALUES('$this->cashier_id', '$this->date_time')";
 
-        if($this->connect()->query($sql)) {
+        if($this->connect->query($sql)) {
             return true;
         } else {
             return false;
