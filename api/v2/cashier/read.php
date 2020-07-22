@@ -4,14 +4,14 @@ header("Access-Control-Allow-Origin: *");
 header("Content-type: application/json");
 
 include_once "../../../config/Database.php";
-include_once "../../../models/Item.php";
+include_once "../../../models/Cashier.php";
 
-$item = new Item();
+$cashier = new Cashier();
 
 $res = array();
 $res['error'] = false;
-$res['items'] = $item->read();
-$res['message'] = 'Items fetched successfully';
+$res['cashiers'] = $cashier->read();
+$res['message'] = 'Cashiers fetched successfully';
 
 echo json_encode($res);
 

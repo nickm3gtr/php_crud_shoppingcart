@@ -1,7 +1,5 @@
 <?php
 
-define('ROOT_PATH', dirname(__DIR__) . '/shopping_cart');
-
 $host = 'localhost';
 $username = 'root';
 $password = '';

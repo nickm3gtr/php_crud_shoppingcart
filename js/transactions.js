@@ -15,8 +15,8 @@ new Vue({
   methods: {
     getAllTransactions() {
       this.loading = true;
-      axios.get("./api/v1.php?action=read-transactions").then((res) => {
-        console.log(res.data.transactions);
+      axios.get("./api/v2/transaction/read.php").then((res) => {
+        console.log(res);
         this.loading = false;
         if (res.data.error) {
           this.errorMessage = res.data.message;
@@ -30,8 +30,9 @@ new Vue({
       var formData = new FormData();
       formData.append("cart_id", id);
       axios
-        .post("./api/v1.php?action=read-transaction-details", formData)
+        .post("./api/v2/transaction/show.php", formData)
         .then((res) => {
+          console.log(res);
           this.cashierName = res.data.transaction_details[0].cashier_name;
           this.date = res.data.transaction_details[0].date_time;
           this.transactionDetails = res.data.transaction_details;

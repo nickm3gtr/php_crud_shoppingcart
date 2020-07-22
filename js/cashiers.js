@@ -16,8 +16,9 @@ new Vue({
   methods: {
     getAllCashiers() {
       this.loading = true;
-      axios.get("./api/v1.php?action=read-cashiers").then((res) => {
+      axios.get("./api/v2/cashier/read.php").then((res) => {
         this.loading = false;
+        console.log(res);
         if (res.data.error) {
           this.errorMessage = res.data.message;
         } else {
@@ -28,7 +29,7 @@ new Vue({
     addCashier() {
       var formData = new FormData();
       formData.append("cashier_name", this.newCashierName);
-      axios.post("./api/v1.php?action=create-cashier", formData).then((res) => {
+      axios.post("./api/v2/cashier/create.php", formData).then((res) => {
         console.log(res);
         this.newCashierName = "";
         this.getAllCashiers();
@@ -36,7 +37,7 @@ new Vue({
     },
     deleteCashier(id) {
       console.log(id);
-      var formData = new FormData();
+      let formData = new FormData();
       formData.append("id", id);
       axios.post("./api/v1.php?action=delete-cashier", formData).then((res) => {
         console.log(res.data);
@@ -45,11 +46,11 @@ new Vue({
     },
     updateCashier() {
       console.log(this.updateID);
-      var formData = new FormData();
+      let formData = new FormData();
       formData.append("id", this.updateID);
       formData.append("cashier_name", this.updateName);
-      axios.post("./api/v1.php?action=update-cashier", formData).then((res) => {
-        console.log(res.data);
+      axios.post("./api/v2/cashier/update.php", formData).then((res) => {
+        console.log(res);
         this.showEditModal = false;
         this.getAllCashiers();
       });

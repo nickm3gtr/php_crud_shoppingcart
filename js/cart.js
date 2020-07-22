@@ -29,7 +29,7 @@ new Vue({
   methods: {
     getAllItems() {
       this.loading = true;
-      axios.get("./api/v1.php?action=read-items").then((res) => {
+      axios.get("./api/v2/item/read.php").then((res) => {
         console.log(res.data.items);
         this.loading = false;
         if (res.data.error) {
@@ -41,7 +41,7 @@ new Vue({
     },
     getAllCashiers() {
       this.loading = true;
-      axios.get("./api/v1.php?action=read-cashiers").then((res) => {
+      axios.get("./api/v2/cashier/read.php").then((res) => {
         console.log(res.data.cashiers);
         this.loading = false;
         if (res.data.error) {
@@ -68,21 +68,21 @@ new Vue({
       var formData = new FormData();
       formData.append("cashier_id", this.selected_cashier);
       // Post cart
-      axios.post("./api/v1.php?action=add-cart", formData).then((res) => {
+      axios.post("./api/v2/cart/create.php", formData).then((res) => {
         console.log(res.data);
         // GET CART ID
-        axios.get("./api/v1.php?action=get-latest-id").then((res) => {
+        axios.get("./api/v2/cart/show.php").then((res) => {
           console.log("ID latest", res.data.id[0]);
           // Post to Item_Cart
           //Must loop all cart contents
           for (let i = 0; i < this.cart.length; i++) {
             // console.log(this.cart[i].item_name);
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append("item_id", this.cart[i].item_id);
             formData.append("cart_id", res.data.id[0]);
             formData.append("item_qty", this.cart[i].item_qty);
             axios
-              .post("./api/v1.php?action=add-item-cart", formData)
+              .post("./api/v2/item_cart/create.php", formData)
               .then((res) => {
                 console.log(res.data);
                 this.cart = [];

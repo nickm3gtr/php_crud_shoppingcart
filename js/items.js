@@ -33,10 +33,10 @@ new Vue({
         item_name: this.newItemName,
         item_price: this.newItemPrice,
       };
-      var formData = new FormData();
+      let formData = new FormData();
       formData.append("item_name", this.newItemName);
       formData.append("item_price", this.newItemPrice);
-      axios.post("./api/v1.php?action=create-item", formData).then((res) => {
+      axios.post("./api/v2/item/create.php", formData).then((res) => {
         console.log(res);
         this.newItemName = "";
         this.newItemPrice = "";
@@ -47,19 +47,19 @@ new Vue({
       console.log(id);
       var formData = new FormData();
       formData.append("id", id);
-      axios.post("./api/v1.php?action=delete-item", formData).then((res) => {
-        console.log(res.data);
+      axios.post("./api/v2/item/delete.php", formData).then((res) => {
+        console.log(res);
         this.getAllItems();
       });
     },
     updateItem() {
       console.log(this.updateID);
-      var formData = new FormData();
+      let formData = new FormData();
       formData.append("id", this.updateID);
       formData.append("item_name", this.updateName);
       formData.append("item_price", this.updatePrice);
-      axios.post("./api/v1.php?action=update-item", formData).then((res) => {
-        console.log(res.data);
+      axios.post("./api/v2/item/update.php", formData).then((res) => {
+        console.log(res);
         this.showEditModal = false;
         this.getAllItems();
       });
