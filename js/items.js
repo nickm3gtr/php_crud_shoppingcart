@@ -18,7 +18,7 @@ new Vue({
   methods: {
     getAllItems() {
       this.loading = true;
-      axios.get("./api/v1.php?action=read-items").then((res) => {
+      axios.get("./api/v2/item/read.php").then((res) => {
         console.log(res);
         this.loading = false;
         if (res.data.error) {

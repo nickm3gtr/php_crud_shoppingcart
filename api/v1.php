@@ -64,7 +64,7 @@ if ($action == 'read-transaction-details') {
 }
 
 
-// Insert data into database
+// Insert data into config
 if ($action == 'create-item') {
   $item_name = $_POST['item_name'];
   $item_price = (float)$_POST['item_price'];
@@ -93,7 +93,7 @@ if ($action == 'create-cashier') {
   }
 }
 
-// Delete data in the database
+// Delete data in the config
 if ($action == 'delete-item') {
   $id = (int) $_POST['id'];
 
