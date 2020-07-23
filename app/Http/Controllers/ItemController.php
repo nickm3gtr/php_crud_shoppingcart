@@ -11,7 +11,7 @@ class ItemController extends Controller
 {
   public function index()
   {
-    $items = Item::paginate(15);
+    $items = Item::all();
     $items = $items->sortKeysDesc();
 
     return (new ItemCollection($items))->response()->setStatusCode(200);

@@ -12,4 +12,9 @@ class Item extends Model
       'item_name',
       'item_price'
     ];
+
+  public function item_carts()
+  {
+    return $this->hasMany('App\Item_Cart', 'item_id');
+  }
 }

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();
@@ -23,8 +23,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cashiers', function () {
   return view('cashiers.index');
-});
+})->middleware('auth');
 
 Route::get('/items', function () {
   return view('items.index');
-});
+})->middleware('auth');
+
+Route::get('/cart', function () {
+  return view('cart.index');
+})->middleware('auth');

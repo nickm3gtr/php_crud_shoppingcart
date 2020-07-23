@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('/cashier', 'CashierController');
 Route::apiResource('/item', 'ItemController');
+Route::apiResource('/cart', 'CartController');
+Route::apiResource('/item_cart', 'ItemCartController');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

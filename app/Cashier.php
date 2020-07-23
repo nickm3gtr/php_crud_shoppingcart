@@ -38,4 +38,9 @@ class Cashier extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+  public function carts()
+  {
+    return $this->hasMany('App\Cart', 'cashier_id');
+  }
 }
