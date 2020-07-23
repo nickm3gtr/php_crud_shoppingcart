@@ -114,46 +114,54 @@
         });
       },
       addToCart() {
-        this.cart.push({
-          item_id: this.selected_item.id,
-          item_name: this.selected_item.name,
-          item_price: this.selected_item.price,
-          item_qty: this.item_quantity,
-          item_amount: parseFloat(
-            this.item_quantity * this.selected_item.price
-          ).toFixed(2),
-        });
-        this.selected_item = {id: "", name: "", price: ""};
-        this.item_quantity = 1;
+        if (this.selected_item.id.length <= 0) {
+          console.log('empty item');
+        } else {
+          this.cart.push({
+            item_id: this.selected_item.id,
+            item_name: this.selected_item.name,
+            item_price: this.selected_item.price,
+            item_qty: this.item_quantity,
+            item_amount: parseFloat(
+              this.item_quantity * this.selected_item.price
+            ).toFixed(2),
+          });
+          this.selected_item = {id: "", name: "", price: ""};
+          this.item_quantity = 1;
+        }
       },
       submitCart() {
-        let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        let formData = new FormData();
-        formData.append("cashier_id", this.cashierId);
-        formData.append("date_time", date);
-        // Post cart
-        axios.post("./api/cart", formData).then((res) => {
-          console.log(res.data);
-          // GET CART ID
-          axios.get("./api/cart").then((res) => {
-            console.log("ID latest", res.data.data.id);
-            // Post to Item_Cart
-            //Must loop all cart contents
-            for (let i = 0; i < this.cart.length; i++) {
-              let formData = new FormData();
-              formData.append("item_id", this.cart[i].item_id);
-              formData.append("cart_id", res.data.data.id);
-              formData.append("item_qty", this.cart[i].item_qty);
-              axios
-                .post("./api/item_cart", formData)
-                .then((res) => {
-                  console.log(res.data);
-                  this.cart = [];
-                });
-              // console.log(this.cart[i].item_id + "," + res.data.id[0]);
-            }
+        if (this.cart.length <= 0) {
+          console.log('cart is empty!');
+        } else {
+          let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+          let formData = new FormData();
+          formData.append("cashier_id", this.cashierId);
+          formData.append("date_time", date);
+          // Post cart
+          axios.post("./api/cart", formData).then((res) => {
+            console.log(res.data);
+            // GET CART ID
+            axios.get("./api/cart").then((res) => {
+              console.log("ID latest", res.data.data.id);
+              // Post to Item_Cart
+              //Must loop all cart contents
+              for (let i = 0; i < this.cart.length; i++) {
+                let formData = new FormData();
+                formData.append("item_id", this.cart[i].item_id);
+                formData.append("cart_id", res.data.data.id);
+                formData.append("item_qty", this.cart[i].item_qty);
+                axios
+                  .post("./api/item_cart", formData)
+                  .then((res) => {
+                    console.log(res.data);
+                    this.cart = [];
+                  });
+                // console.log(this.cart[i].item_id + "," + res.data.id[0]);
+              }
+            });
           });
-        });
+        }
       },
     },
     computed: {

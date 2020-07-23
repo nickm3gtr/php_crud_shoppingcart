@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Http\Resources\CartResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -19,17 +20,24 @@ class CartController extends Controller
 
   public function store(Request $request)
   {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
       'cashier_id' => 'required',
       'date_time' => 'required'
     ]);
 
-    $cart = Cart::create($request->all());
+    if($validator->fails()) {
+      return response()->json([
+        'error' => true,
+        'message' => 'Cart insert failed!'
+      ], 422);
+    } else {
+      $cart = Cart::create($request->all());
 
-    return response()->json([
-      'error' => false,
-      'message' => 'Cart added successfully!'
-    ], 200);
+      return response()->json([
+        'error' => false,
+        'message' => 'Cart added successfully!'
+      ], 200);
+    }
   }
 }
 

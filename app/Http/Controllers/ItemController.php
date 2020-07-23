@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ItemCollection;
 use App\Http\Resources\ItemResource;
 use App\Item;
+use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -19,17 +21,24 @@ class ItemController extends Controller
 
   public function store(Request $request)
   {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
       'item_name' => 'required',
       'item_price' => 'required'
     ]);
 
-    $item = Item::create($request->all());
+    if($validator->fails()) {
+      return response()->json([
+        'error' => true,
+        'message' => 'Item insert failed!'
+      ], 422);
+    } else {
+      $item = Item::create($request->all());
 
-    return response()->json([
-      'error' => false,
-      'message' => 'Item added successfully!'
-    ], 200);
+      return response()->json([
+        'error' => false,
+        'message' => 'Item added successfully!'
+      ], 200);
+    }
   }
 
   public function update(Item $item, Request $request)
