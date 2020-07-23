@@ -23,6 +23,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('cashier-component', require('./components/CashierComponent.vue').default);
 Vue.component('item-component', require('./components/ItemComponent.vue').default);
 Vue.component('cart-component', require('./components/CartComponent.vue').default);
+Vue.component('transaction-component', require('./components/TransactionComponent.vue').default);
+
+Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

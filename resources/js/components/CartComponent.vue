@@ -33,14 +33,7 @@
             Shopping Cart
           </div>
           <div class="card-body">
-            <div class="form-group">
-              <label>Select cashier</label>
-              <select class="form-control" v-model="selected_cashier">
-                <option v-for="cashier in cashiers" :value="cashier.id">
-                  <span v-cloak>{{ cashier.name }}</span>
-                </option>
-              </select>
-            </div>
+            <h6>Cashier name: {{ cashierName }}</h6>
             <!-- Table for cart -->
             <table class="table table-sm mt-2" v-if="!loading && items.length > 0">
               <thead class="thead-light">
@@ -82,7 +75,8 @@
         selected_item: {id: "", name: "", price: ""},
         selected_cashier: "",
         items: [],
-        cashiers: [],
+        cashierId: '',
+        cashierName: '',
         item_quantity: 1,
         cartId: "",
         cart: [],
@@ -91,7 +85,8 @@
     mounted() {
       console.log("Vue js is running 'cart page'...");
       this.getAllItems();
-      this.getAllCashiers();
+      this.getCashier();
+      console.log(this.$userId, "userID");
     },
     methods: {
       getAllItems() {
@@ -106,15 +101,15 @@
           }
         });
       },
-      getAllCashiers() {
-        this.loading = true;
-        axios.get("./api/cashier").then((res) => {
-          console.log(res.data.cashiers);
+      getCashier() {
+        axios.get(`./api/cashier/${this.$userId}`).then((res) => {
+
           this.loading = false;
           if (res.data.error) {
             this.errorMessage = res.data.message;
           } else {
-            this.cashiers = res.data.data;
+            this.cashierId = res.data.data.id;
+            this.cashierName = res.data.data.name;
           }
         });
       },
@@ -134,7 +129,7 @@
       submitCart() {
         let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
         let formData = new FormData();
-        formData.append("cashier_id", this.selected_cashier);
+        formData.append("cashier_id", this.cashierId);
         formData.append("date_time", date);
         // Post cart
         axios.post("./api/cart", formData).then((res) => {

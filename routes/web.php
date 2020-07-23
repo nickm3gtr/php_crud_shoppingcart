@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('welcome');
-});
+  return view('cart.index');
+})->middleware('auth');
 
 Auth::routes();
 
@@ -31,4 +31,8 @@ Route::get('/items', function () {
 
 Route::get('/cart', function () {
   return view('cart.index');
+})->middleware('auth');
+
+Route::get('/transactions', function () {
+  return view('transactions.index');
 })->middleware('auth');
