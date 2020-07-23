@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/cashiers', function () {
+  return view('cashiers.index');
+});
+
+Route::get('/items', function () {
+  return view('items.index');
+});
