@@ -15,12 +15,12 @@ class CreateItemCartsTable extends Migration
   {
     Schema::create('item_cart', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('item_id');
+      $table->unsignedBigInteger('item_id')->nullable();
       $table->unsignedBigInteger('cart_id');
       $table->integer('item_qty');
       $table->timestamps();
 
-      $table->foreign('item_id')->references('id')->on('item');
+      $table->foreign('item_id')->references('id')->on('item')->onDelete('set null');
       $table->foreign('cart_id')->references('id')->on('cart');
     });
   }
