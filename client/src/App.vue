@@ -9,9 +9,18 @@
 
       <v-spacer></v-spacer>
 
+      <v-toolbar-items v-if="!isAuthenticated">
+        <v-btn text class="font-weight-light" @click="$router.push('/login', () => {})">Login</v-btn>
+        <v-btn text class="font-weight-light" @click="$router.push('/register', () => {})">Register</v-btn>
+      </v-toolbar-items>
+
+      <v-toolbar-items v-else>
+        <v-btn text class="font-weight-light" @click="logout">Logout</v-btn>
+      </v-toolbar-items>
+
     </v-app-bar>
 
-    <NavDrawerComponent />
+    <NavDrawerComponent v-if="isAuthenticated" />
 
     <v-main class="view-container">
       <router-view></router-view>
@@ -22,6 +31,7 @@
 
 <script>
   import NavDrawerComponent from "./components/NavDrawerComponent";
+  import { mapState } from 'vuex'
 
   export default {
     name: 'App',
@@ -32,8 +42,16 @@
     data: () => ({
 
     }),
+    beforeCreate() {
+      this.$store.dispatch('authenticateUser');
+    },
     methods: {
-
+      logout() {
+        this.$store.dispatch('logoutUser');
+      }
+    },
+    computed: {
+      ...mapState(['isAuthenticated'])
     }
   };
 </script>

@@ -1,11 +1,19 @@
 <template>
-    <div>Cart</div>
+  <div>
+    <CartComponent/>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "Cart"
+  import CartComponent from "../components/CartComponent";
+
+  export default {
+    name: "Cart",
+    components: {CartComponent},
+    comments: {
+      CartComponent
     }
+  }
 </script>
 
 <style scoped>

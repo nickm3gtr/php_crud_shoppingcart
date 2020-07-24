@@ -50,7 +50,7 @@
           {title: 'Cart', icon: 'mdi-cart', route: '/'},
           {title: 'Items', icon: 'mdi-shopping', route: '/items'},
           {title: 'Cashiers', icon: 'mdi-account', route: '/cashiers'},
-          {title: 'About', icon: 'mdi-help-box'},
+          {title: 'Transactions', icon: 'mdi-cash-usd', route: '/transactions'},
         ],
         right: null,
       }

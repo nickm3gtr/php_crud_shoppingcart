@@ -164,7 +164,13 @@
     methods: {
       getAllItems() {
         this.loading = true;
-        axios.get("./api/item").then((res) => {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+        axios.get("./api/item", config).then((res) => {
           console.log(res);
           this.loading = false;
           if (res.data.error) {
@@ -178,7 +184,8 @@
         const config = {
           headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         };
         axios.delete(`./api/item/${id}`, config).then((res) => {
@@ -188,9 +195,16 @@
       },
       addItem() {
         let formData = new FormData();
+        const config = {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        };
         formData.append("item_name", this.newItem.item_name);
         formData.append("item_price", this.newItem.item_price);
-        axios.post("./api/item", formData).then((res) => {
+        axios.post("./api/item", formData, config).then((res) => {
           console.log(res);
           this.newItem.item_name = "";
           this.newItem.item_price = "";
@@ -202,7 +216,8 @@
         let config = {
           headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         };
         const updateData = JSON.stringify({
