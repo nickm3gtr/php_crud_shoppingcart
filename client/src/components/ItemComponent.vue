@@ -60,7 +60,7 @@
             <v-dialog v-model="addDialog" max-width="500px">
               <v-card>
                 <v-card-title>
-                  <span class="subtitle-1">Edit item</span>
+                  <span class="subtitle-1">Add item</span>
                 </v-card-title>
 
                 <v-card-text>
