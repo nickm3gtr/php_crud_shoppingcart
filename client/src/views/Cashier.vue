@@ -11,6 +11,13 @@
     name: "Cashier",
     components: {
       CashierComponent
+    },
+    mounted() {
+      setTimeout(() => {
+        if(!this.$store.state.isAuthenticated) {
+          this.$router.push('/login', () => {})
+        }
+      }, 1000)
     }
   }
 </script>

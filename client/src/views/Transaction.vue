@@ -9,6 +9,13 @@
     components: {TransactionComponent},
     comments: {
       TransactionComponent
+    },
+    mounted() {
+      setTimeout(() => {
+        if(!this.$store.state.isAuthenticated) {
+          this.$router.push('/login', () => {})
+        }
+      }, 1000)
     }
   }
 </script>

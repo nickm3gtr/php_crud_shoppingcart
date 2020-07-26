@@ -12,6 +12,13 @@
     components: {CartComponent},
     comments: {
       CartComponent
+    },
+    mounted() {
+      setTimeout(() => {
+        if(!this.$store.state.isAuthenticated) {
+          this.$router.push('/login', () => {})
+        }
+      }, 1000)
     }
   }
 </script>

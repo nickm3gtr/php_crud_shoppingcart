@@ -35,8 +35,8 @@
           </v-card-title>
           <v-card-text>
 
-            <span class="subtitle-2">Cashier name: {{ cashierName }}</span>
-            <span class="subtitle-2">Date: {{ date }}</span>
+            <p class="subtitle-2">Cashier name: {{ cashierName }}</p>
+            <p class="subtitle-2">Date: {{ date }}</p>
 
             <v-data-table
               dense
@@ -45,6 +45,7 @@
               loading-text="loading..."
               :items="formatTransactions"
               :headers="headers_details"
+              :hide-default-footer="true"
             >
             </v-data-table>
 

@@ -14,8 +14,38 @@
         <v-btn text class="font-weight-light" @click="$router.push('/register', () => {})">Register</v-btn>
       </v-toolbar-items>
 
-      <v-toolbar-items v-else>
-        <v-btn text class="font-weight-light" @click="logout">Logout</v-btn>
+      <v-toolbar-items v-if="isAuthenticated">
+
+        <v-menu
+          v-model="menu"
+          :absolute="true"
+          :close-on-click="true"
+          :close-on-content-click="true"
+          :offset-y="true"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              text
+              class="font-weight-light"
+              v-bind="attrs"
+              v-on="on"
+              :value="user.name"
+            >
+              <v-icon>mdi-account-circle-outline</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+            >
+              <v-list-item-title>{{ this.user.name }}</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              @click="logout"
+            >
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
 
     </v-app-bar>
@@ -40,7 +70,7 @@
     },
 
     data: () => ({
-
+      menu: false
     }),
     beforeCreate() {
       this.$store.dispatch('authenticateUser');
@@ -51,7 +81,7 @@
       }
     },
     computed: {
-      ...mapState(['isAuthenticated'])
+      ...mapState(['isAuthenticated', 'user'])
     }
   };
 </script>

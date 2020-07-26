@@ -46,6 +46,7 @@ export default new Vuex.Store({
       state.errorMessage = "Registration failed";
     },
     LOGIN_ERROR: state => {
+      localStorage.removeItem("token");
       state.token = null;
       state.user = null;
       state.isAuthenticated = false;
@@ -87,10 +88,11 @@ export default new Vuex.Store({
           "Content-Type": "application/json"
         }
       };
+      console.log(process.env.VUE_APP_CLIENTSECRET)
       const body = JSON.stringify({
         grant_type: "password",
-        client_id: 2,
-        client_secret: "e4tiireuQM63oq3jSZQtxJMjENoZAAwIz5ugzO81",
+        client_id: process.env.VUE_APP_CLIENTID,
+        client_secret: process.env.VUE_APP_CLIENTSECRET,
         username,
         password
       });
@@ -121,7 +123,9 @@ export default new Vuex.Store({
           commit("AUTH_USER", payload);
           router.push("/", () => {});
         })
-        .catch(() => {});
+        .catch(() => {
+          commit("LOGIN_ERROR")
+        });
     },
     logoutUser: ({ commit }) => {
       commit("LOGOUT_USER");

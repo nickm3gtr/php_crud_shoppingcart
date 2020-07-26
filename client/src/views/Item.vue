@@ -10,6 +10,13 @@
     components: {ItemComponent},
     comments: {
       ItemComponent
+    },
+    mounted() {
+      setTimeout(() => {
+        if(!this.$store.state.isAuthenticated) {
+          this.$router.push('/login', () => {})
+        }
+      }, 1000)
     }
   }
 </script>
