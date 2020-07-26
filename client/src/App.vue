@@ -18,13 +18,14 @@
 
         <v-menu
           v-model="menu"
-          :absolute="true"
+          :open-on-click="true"
           :close-on-click="true"
           :close-on-content-click="true"
           :offset-y="true"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
+              fab
               text
               class="font-weight-light"
               v-bind="attrs"
@@ -70,7 +71,7 @@
     },
 
     data: () => ({
-      menu: false
+      menu: false,
     }),
     beforeCreate() {
       this.$store.dispatch('authenticateUser');

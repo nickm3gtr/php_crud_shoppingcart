@@ -22,23 +22,43 @@
             <v-btn @click="submitLogin" color="primary">Login</v-btn>
           </v-card-actions>
         </v-card>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="3000"
+          color="error"
+        >
+          <span>{{ this.errorMessage }}</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import {mapActions, mapState} from 'vuex'
 
   export default {
     name: "Login",
     data: () => ({
       username: '',
       password: '',
+      errorMessage: '',
+      snackbar: false,
     }),
     beforeCreate() {
-      if(this.$store.state.isAuthenticated) {
-        this.$router.push('/', () => {})
+      if (this.$store.state.isAuthenticated) {
+        this.$router.push('/', () => {
+        })
       }
     },
     methods: {
@@ -49,6 +69,21 @@
           password: this.password
         }
         this.loginUser(payload);
+        if (this.errorType === "LOGIN_ERROR") {
+          this.errorMessage = this.$store.state.errorMessage
+          this.snackbar = true
+        }
+      }
+    },
+    computed: {
+      ...mapState(['errorType'])
+    },
+    watch: {
+      errorType() {
+        if (this.errorType === "LOGIN_ERROR") {
+          this.errorMessage = this.$store.state.errorMessage
+          this.snackbar = true
+        }
       }
     }
   }

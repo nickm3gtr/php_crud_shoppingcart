@@ -19,32 +19,63 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="10" offset="1">
-                <v-text-field v-model="newUser.password" dense outlined label="Password" type="password"></v-text-field>
+                <v-text-field
+                  v-model="newUser.password" dense outlined
+                  label="Password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPassword ? 'text' : 'password'"
+                  @click:append="showPassword = !showPassword"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="10" offset="1">
-                <v-text-field v-model="newUser.confirmPassword" dense outlined label="Confirm Password" type="password"></v-text-field>
+                <v-text-field
+                  v-model="newUser.confirmPassword" dense outlined
+                  label="Confirm Password"
+                  :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showConfirmPassword ? 'text' : 'password'"
+                  @click:append="showConfirmPassword = !showConfirmPassword"
+                ></v-text-field>
               </v-col>
             </v-row>
-            <v-row><p class="error--text">{{ errorMessage }}</p> </v-row>
           </v-card-text>
           <v-card-actions class="justify-center">
             <v-btn color="primary" @click="register">Register</v-btn>
           </v-card-actions>
         </v-card>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="3000"
+          color="error"
+        >
+          <span>{{ this.errorMessage }}</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapState} from 'vuex'
 
   export default {
     name: "Register",
     data: () => ({
+      showPassword: false,
+      showConfirmPassword: false,
       errorMessage: '',
+      snackbar: false,
       newUser: {
         name: '',
         email: '',
@@ -53,8 +84,9 @@
       }
     }),
     beforeCreate() {
-      if(this.$store.state.isAuthenticated) {
-        this.$router.push('/', () => {})
+      if (this.$store.state.isAuthenticated) {
+        this.$router.push('/', () => {
+        })
       }
     },
     methods: {
@@ -68,12 +100,23 @@
             password: '',
             confirmPassword: '',
           }
+        } else if (this.errorType === "REGISTER_ERROR") {
+          this.errorMessage = this.$store.state.errorMessage
+          this.snackbar = true
         } else {
-          if (this.$store.state.isError) {
-            this.errorMessage = this.$store.state.errorMessage
-          } else {
-            this.errorMessage = "Password not the same or length is less than 8 characters";
-          }
+          this.errorMessage = "Password not the same or length is less than 8 characters";
+          this.snackbar = true
+        }
+      }
+    },
+    computed: {
+      ...mapState(["errorType"])
+    },
+    watch: {
+      errorType() {
+        if (this.errorType === "REGISTER_ERROR") {
+          this.errorMessage = this.$store.state.errorMessage
+          this.snackbar = true
         }
       }
     }

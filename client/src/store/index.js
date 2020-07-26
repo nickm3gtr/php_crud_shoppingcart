@@ -11,7 +11,8 @@ export default new Vuex.Store({
     user: null,
     isAuthenticated: false,
     isError: false,
-    errorMessage: ""
+    errorMessage: "",
+    errorType: "",
   },
   mutations: {
     DEFAULT_STATE: state => {
@@ -19,6 +20,7 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
       state.isError = false;
       state.errorMessage = "";
+      state.errorType = "";
     },
     SET_TOKEN: (state, payload) => {
       localStorage.setItem("token", payload.access_token);
@@ -29,6 +31,7 @@ export default new Vuex.Store({
       state.user = payload.user;
       state.isError = false;
       state.errorMessage = "";
+      state.errorType = "";
     },
     LOGOUT_USER: state => {
       localStorage.removeItem("token");
@@ -37,6 +40,7 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
       state.isError = false;
       state.errorMessage = "";
+      state.errorType = "";
     },
     REGISTER_ERROR: state => {
       state.token = null;
@@ -44,6 +48,7 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
       state.isError = true;
       state.errorMessage = "Registration failed";
+      state.errorType = "REGISTER_ERROR";
     },
     LOGIN_ERROR: state => {
       localStorage.removeItem("token");
@@ -52,6 +57,16 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
       state.isError = true;
       state.errorMessage = "Login failed";
+      state.errorType = "LOGIN_ERROR";
+    },
+    AUTH_ERROR: state => {
+      localStorage.removeItem("token");
+      state.token = null;
+      state.user = null;
+      state.isAuthenticated = false;
+      state.isError = true;
+      state.errorMessage = "";
+      state.errorType = "AUTH_ERROR";
     }
   },
   actions: {
@@ -124,7 +139,7 @@ export default new Vuex.Store({
           router.push("/", () => {});
         })
         .catch(() => {
-          commit("LOGIN_ERROR")
+          // commit("AUTH_ERROR")
         });
     },
     logoutUser: ({ commit }) => {
