@@ -121,6 +121,60 @@
             </v-data-table>
           </v-card-text>
         </v-card>
+        <!--Update Message-->
+        <v-snackbar
+          v-model="updateSnackbar"
+          :timeout="3000"
+          color="primary"
+        >
+          <span>{{ this.snackbarMessage }}</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="updateSnackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
+        <!--Delete Message-->
+        <v-snackbar
+          v-model="deleteSnackbar"
+          :timeout="3000"
+          color="error"
+        >
+          <span>{{ this.snackbarMessage }}</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="deleteSnackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
+        <!--Add-->
+        <v-snackbar
+          v-model="addSnackbar"
+          :timeout="3000"
+          color="success"
+        >
+          <span>{{ this.snackbarMessage }}</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="addSnackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
@@ -134,6 +188,10 @@
     data: () => ({
       errorMessage: '',
       loading: false,
+      updateSnackbar: false,
+      deleteSnackbar: false,
+      addSnackbar: false,
+      snackbarMessage: '',
       items: [],
       updateDialog: false,
       addDialog: false,
@@ -191,6 +249,8 @@
         axios.delete(`./api/item/${id}`, config).then((res) => {
           console.log(res);
           this.getAllItems();
+          this.snackbarMessage = 'Item deleted!'
+          this.deleteSnackbar = true
         });
       },
       addItem() {
@@ -210,6 +270,8 @@
           this.newItem.item_price = "";
           this.addDialog = false;
           this.getAllItems();
+          this.snackbarMessage = 'Item added!'
+          this.addSnackbar = true
         });
       },
       updateItem() {
@@ -228,6 +290,8 @@
           console.log(res);
           this.updateDialog = false;
           this.getAllItems();
+          this.snackbarMessage = 'Item updated!'
+          this.updateSnackbar = true
         });
       },
       editItem(item) {

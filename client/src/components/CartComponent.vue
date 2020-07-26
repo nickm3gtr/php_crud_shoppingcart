@@ -57,6 +57,23 @@
             <v-btn color="primary" @click="submitCart">Submit Cart</v-btn>
           </v-card-actions>
         </v-card>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="3000"
+          color="success"
+        >
+          <span>Transaction recorded!</span>
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
@@ -70,6 +87,7 @@
     data: () => ({
       errorMessage: '',
       loading: false,
+      snackbar: false,
       items: [],
       item_qty: 1,
       cart: [],
@@ -181,6 +199,7 @@
                   .then((res) => {
                     console.log(res.data);
                     this.cart = [];
+                    this.snackbar = true
                   });
               }
             });
