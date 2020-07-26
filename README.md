@@ -8,4 +8,5 @@ Vue js frontend setup
 1. cd client\
 2. npm install
 3. configure rest api URL in .env VUE_APP_DEVSERVERPROXY
+
 4.npm run serve
