@@ -14,7 +14,14 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="10" offset="1">
-                <v-text-field v-model="password" dense outlined label="Password" type="password"></v-text-field>
+                <v-text-field
+                  v-model="password"
+                  dense outlined
+                  label="Password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPassword ? 'text' : 'password'"
+                  @click:append="showPassword = !showPassword"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-card-text>
@@ -52,6 +59,7 @@
     data: () => ({
       username: '',
       password: '',
+      showPassword: false,
       errorMessage: '',
       snackbar: false,
     }),

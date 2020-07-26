@@ -79,6 +79,7 @@
     methods: {
       logout() {
         this.$store.dispatch('logoutUser');
+        this.menu = false
       }
     },
     computed: {
